@@ -16,18 +16,22 @@ Route::get('/', function () {
 });
 
 // Route to create a new role
-Route::post('Create', 'JwtAuthenticateController@createRole');
+Route::post('Create', 'RolesController@createRole');
 //Route to edit role
-Route::post('Edit/{id}', 'JwtAuthenticateController@EditRole');
+Route::post('Edit/{id}', 'RolesController@EditRole');
 //Route to delete
-Route::post('Delete/{id}', 'JwtAuthenticateController@DeleteRole');
+Route::post('Delete/{id}', 'RolesController@DeleteRole');
 //Route to get all roles
-Route::get('All-Roles', 'JwtAuthenticateController@GetRoles');
+Route::get('All-Roles', 'RolesController@GetRoles');
 
 
 
 // Route to create a new permission
-Route::post('permission', 'JwtAuthenticateController@createPermission');
+Route::post('Create', 'PermessionsController@createPermission');
+Route::post('Edit/{id}', 'PermessionsController@EditPermission');
+Route::post('Delete/{id}', 'PermessionsController@DeletePermission');
+
+
 // Route to assign role to user
 Route::post('assign-role', 'JwtAuthenticateController@assignRole');
 // Route to attache permission to a role
