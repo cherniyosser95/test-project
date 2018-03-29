@@ -25,4 +25,8 @@ class User extends Eloquent implements Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role');
+    }
 }

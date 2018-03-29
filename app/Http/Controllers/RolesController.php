@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Role;
 use App\Http\Requests\RoleRequest;
 use App\User;
+use Illuminate\Http\Request;
 class RolesController extends Controller
 {
     // create role for user
@@ -47,11 +48,25 @@ class RolesController extends Controller
     }
         //Associer un role admin ou bien user a un utilisateur inscrit
     public function assignRole(Request $request){
-        $user = User::where('email', '=', $request->input('email'))->first();
-        $role = Role::where('name', '=', $request->input('role'))->first();
+        $user = User::where('username', '=', $request->input('username'))->first();
+        $role = Role::where('name', '=', $request->input('name'))->first();
         //$user->attachRole($request->input('role'));
         $user->roles()->attach($role->id);
-
         return response()->json("created");
+    }
+ /*   public function EditAttachedRole(Request $request,$id_user,$id_role){
+        $user = User::find($id_user)->where('username', '=', $request->input('username'))->first();
+        $role = Role::find($id_role)->where('name', '=', $request->input('name'))->first();
+        //$user->attachRole($request->input('role'));
+        $user->roles()->attach($role);
+        return response()->json("updated");
+    }*/
+    //Destroy user with her roles
+    public function Destroy($id)
+    {
+        $user=User::find($id);
+        $user->roles()->detach();
+        $user->delete();
+        return response()->json("deleted");
     }
 }

@@ -14,29 +14,36 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::group(['prefix' => 'Roles'], function () {
 // Route to create a new role
-Route::post('Create', 'RolesController@createRole');
+    Route::post('Create', 'RolesController@createRole');
 //Route to edit role
-Route::post('Edit/{id}', 'RolesController@EditRole');
+    Route::post('Edit/{id}', 'RolesController@EditRole');
 //Route to delete
-Route::post('Delete/{id}', 'RolesController@DeleteRole');
+    Route::post('Delete/{id}', 'RolesController@DeleteRole');
 //Route to get all roles
-Route::get('All-Roles', 'RolesController@GetRoles');
+    Route::get('All-Roles', 'RolesController@GetRoles');
 
-
-
+});
+Route::group(['prefix' => 'Permissions', 'namespace' => 'Api'], function () {
 // Route to create a new permission
-Route::post('Create', 'PermessionsController@createPermission');
-Route::post('Edit/{id}', 'PermessionsController@EditPermission');
-Route::post('Delete/{id}', 'PermessionsController@DeletePermission');
+    Route::post('Create-Permission', 'PermessionsController@createPermission');
+//Route::post('Edit-Permission/{id}', 'PermessionsController@EditPermission');
+    Route::post('Delete-Permission/{id}', 'PermessionsController@DeletePermission');
 
-
+});
+Route::group(['prefix' => 'Roles-Users'], function () {
 // Route to assign role to user
-Route::post('assign-role', 'JwtAuthenticateController@assignRole');
+    Route::post('Create-assign-role', 'RolesController@assignRole');
+// Route to edit assign role
+    Route::post('Edit-assign-role/{id_user}/{id_role}', 'RolesController@EditAttachedRole');
+//delete assigned role
+    Route::post('Delete-assign-role/{id}', 'RolesController@Destroy');
+});
+Route::group(['prefix' => 'Permissions-Roles', 'namespace' => 'Api'], function () {
 // Route to attache permission to a role
-Route::post('attach-permission', 'JwtAuthenticateController@attachPermission');
-
+    Route::post('attach-permission', 'JwtAuthenticateController@attachPermission');
+});
 // API route group that we need to protect
 Route::group(['prefix' => 'api', 'middleware' => ['ability:admin,create-users']], function()
 {

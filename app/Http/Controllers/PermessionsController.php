@@ -21,7 +21,7 @@ class PermessionsController extends Controller
     }
     public function DeletePermission($id){
         $permission = Permission::find($id);
-        $permission->Delete();
+        $permission->delete();
         return response()->json("deleted");
     }
 }
