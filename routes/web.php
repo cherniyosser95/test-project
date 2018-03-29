@@ -43,6 +43,9 @@ Route::group(['prefix' => 'api', 'middleware' => ['ability:admin,create-users']]
 Route::group(['prefix' => 'api/v1', 'namespace' => 'Api'], function () {
 
     Route::post('/auth/register', ['as' => 'auth.register', 'uses' => 'AuthController@register']);
-    Route::post('/auth/login', ['as' => 'auth.login', 'uses' => 'AuthController@login']);
 
+
+});
+Route::group(['middleware' => 'jwt.auth'], function () {
+    Route::get('user', 'AuthController@getAuthUser');
 });

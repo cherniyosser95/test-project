@@ -1,11 +1,12 @@
 <?php
 
 namespace App;
-use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Eloquent;
-class User extends Eloquent
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticableTrait;
+class User extends Eloquent implements Authenticatable
 {
-    use EntrustUserTrait;
+    use AuthenticableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -13,7 +14,7 @@ class User extends Eloquent
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username', 'email', 'role','password',
     ];
 
     /**
