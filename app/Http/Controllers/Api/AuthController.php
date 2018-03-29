@@ -7,7 +7,8 @@ use App\User;
 use App\Http\Requests\RegisterRequest;
 use JWTAuthException;
 use Illuminate\Support\Facades\Request;
-use Tymon\JWTAuth\JWTAuth;
+use JWTAuth;
+use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     private $user;
@@ -15,6 +16,7 @@ class AuthController extends Controller
     {
         $this->user = $user;
     }
+    // Register User
     public function register(RegisterRequest $request)
     {
         $user = $this->user->create([
@@ -25,8 +27,5 @@ class AuthController extends Controller
         ]);
         return response()->json(['status'=>true,'message'=>'User created successfully','data'=>$user]);
     }
-    public function getAuthUser(Request $request){
-        $user = JWTAuth::toUser($request->token);
-        return response()->json(['result' => $user]);
-    }
+
 }

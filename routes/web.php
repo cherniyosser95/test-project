@@ -16,7 +16,16 @@ Route::get('/', function () {
 });
 
 // Route to create a new role
-Route::post('role', 'JwtAuthenticateController@createRole');
+Route::post('Create', 'JwtAuthenticateController@createRole');
+//Route to edit role
+Route::post('Edit/{id}', 'JwtAuthenticateController@EditRole');
+//Route to delete
+Route::post('Delete/{id}', 'JwtAuthenticateController@DeleteRole');
+//Route to get all roles
+Route::get('All-Roles', 'JwtAuthenticateController@GetRoles');
+
+
+
 // Route to create a new permission
 Route::post('permission', 'JwtAuthenticateController@createPermission');
 // Route to assign role to user
@@ -46,6 +55,5 @@ Route::group(['prefix' => 'api/v1', 'namespace' => 'Api'], function () {
 
 
 });
-Route::group(['middleware' => 'jwt.auth'], function () {
-    Route::get('user', 'AuthController@getAuthUser');
-});
+
+Route::get('user', 'JwtAuthenticateController@getAuthUser',['middleware' => 'jwt.auth']);
