@@ -12,12 +12,13 @@ class RolesController extends Controller
     {
         $role = new Role();
         $role->name = $request->input('name');
+        $role->display_name=$request->input('display_name');
         // test sur le role name, doit etre si admin ou bien user pour ne pas risqué d'entrer un nom quelconque
-        if(($role->name == "admin")|| ($role->name == "user")) {
+        if(($role->name == "admin")|| ($role->name == "user") || ($role->name == "super-admin")) {
             $role->save();
         }
         else{
-            "try to create valid role";
+           echo "try to create valid role";
         }
         return response()->json("created");
     }
@@ -46,6 +47,7 @@ class RolesController extends Controller
         $roles =Role::all();
         return response()->json(compact('roles'));
     }
+    public function GetRoleById($id){}
         //Associer un role admin ou bien user a un utilisateur inscrit
     public function assignRole(Request $request){
         $user = User::where('username', '=', $request->input('username'))->first();

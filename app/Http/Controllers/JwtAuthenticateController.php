@@ -33,18 +33,13 @@ class JwtAuthenticateController extends Controller
             }
 
             // if no errors are encountered we can return a JWT
-            return response()->json(['auth->id'=>Auth::user()->id,'token'=>$token]);
+            return response()->json(['auth_user_id'=>Auth::user()->id,'token'=>$token]);
         }
-             // get Auth user from token
+             // get Auth user from token et id_user passed en parametre
         public function getAuthUser(Request $request){
-            //$user_find=User::find($id);
-            $user = JWTAuth::toUser($request->token);
+            $user_find=User::find($request->id);
+            $user = JWTAuth::toUser($request->token,$user_find->id);
             return response()->json(['result' => $user]);
         }
-        public function attachPermission(Request $request){
-            $role = Role::where('name', '=', $request->input('role'))->first();
-            $permission = Permission::where('name', '=', $request->input('name'))->first();
-            $role->attachPermission($permission);
-            return response()->json("created");
-        }
+
 }

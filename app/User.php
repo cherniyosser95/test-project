@@ -29,4 +29,5 @@ class User extends Eloquent implements Authenticatable
     {
         return $this->belongsToMany('App\Role');
     }
+
 }
